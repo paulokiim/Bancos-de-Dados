@@ -1,0 +1,26 @@
+{
+  "name": "bancos-de-dados",
+  "version": "1.0.0",
+  "description": "# Esse projeto consistem em criar um Back-end e um Front-end para transição de dinheiro por meio de cartão e/ou boletos",
+  "main": "config.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.0",
+    "pg": "^7.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./app/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulokiim/Bancos-de-Dados.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paulokiim/Bancos-de-Dados/issues"
+  },
+  "homepage": "https://github.com/paulokiim/Bancos-de-Dados#readme"
+}
