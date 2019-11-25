@@ -1,0 +1,27 @@
+-Cartao
+    -Post: criar cartão (deixar salvo) (precisa do idComprador, bandeira, portador, ultimosdigitos)
+    -Get: cartão (mostra poucos dados) (só volta 4ultimos e bandeira)
+    -Delete
+
+-Boleto
+    criado pelo backend ao gerar compra
+    -Get: pegar código de barras ou pdf (codigodebarras, valor, vencimento, pagador, recebedor)
+       - pra elaborar bem, retornar um pdf /boletos/:id/pdf
+
+-Compra
+    -Post: criar compra, usando 1 ou mais meios de pagamento (transações)
+        (precisa do id do comprador e loja, data e valor)
+    -Get: mostrar compra e seus dados
+
+-Comprador
+    -Post: criar comprador (nome, cpf, nascimento)
+    -Get: listar comprador e ver se existe (busca por cpf)
+
+-Loja
+    -Post: criar Loja (nome e cnpj)
+    -Get: listar loja
+
+-Transacao
+    -vai ser criada por baixo dos panos ao fazer um post em compras
+    -Get: listar dados da transação 
+    -Put: estornar transação (bem opcional) (setar status para refunded)
