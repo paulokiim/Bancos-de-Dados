@@ -1,12 +1,36 @@
-const db = require("../db");
+const { head } = require('ramda')
+const db = require('../db')
 
-// index, show, store, update, destroy
+const compradores = [{
+  id_comprador: 21418,
+  nome: 'Igor Antun',
+  cpf: '123.456.789-09',
+  data_nascimento: '22/12/1999',
+}]
+
 module.exports = {
-    index(req, res) {
-        //Constroi a query e retorna o res
-    },
-    show(req, res) {},
-    store(req, res) {},
-    update(req, res) {},
-    destroy(req, res) {}
-};
+  show(req, res) {
+    const { cpf } = req.query
+    res.send(head(compradores.filter(comprador => comprador.cpf == cpf)))
+  },
+
+  create(req, res) {
+    const {
+      nome,
+      cpf,
+      data_nascimento
+    } = req.body
+
+    const id_comprador = Math.floor(Math.random() * 90000) + 10000
+
+    const comprador = {
+      id_comprador,
+      nome,
+      cpf,
+      data_nascimento,
+    }
+
+    compradores.push(comprador)
+    res.send(201, comprador)
+  },
+}

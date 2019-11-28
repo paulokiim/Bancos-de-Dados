@@ -1,14 +1,22 @@
-const express = require("express");
+const express = require('express')
 
-const Cartao = require("./controllers/Cartao");
-const Compra = require("./controllers/Compra");
-const Boleto = require("./controllers/Boleto");
-const Loja = require("./controllers/Loja");
-const Transacao = require("./controllers/Transacao");
-const Comprador = require("./controllers/Comprador");
+const Cartao = require('./controllers/Cartao')
+const Compra = require('./controllers/Compra')
+const Comprador = require('./controllers/Comprador')
 
-const routes = express.Router();
+const routes = express.Router()
 
-routes.get("/transacao", Transacao.index);
+// Cartões
+routes.get('/cartoes', Cartao.show)
+routes.post('/cartoes', Cartao.create)
+routes.delete('/cartoes', Cartao.delete)
 
-module.exports = routes;
+// Compras
+routes.get('/compras', Compra.show)
+routes.post('/compras', Compra.create)
+
+// Compradores
+routes.get('/compradores', Comprador.show)
+routes.post('/compradores', Comprador.create)
+
+module.exports = routes

@@ -1,8 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
-import App from './components/App.jsx'
-
-import styles from './scss/application.scss'
+import App from './components/App.js'
+import { initializeIcons } from '@uifabric/icons'
+initializeIcons()
 
 render(
   <App />,

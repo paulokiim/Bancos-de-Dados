@@ -1,12 +1,46 @@
-const db = require("../db");
+const { head } = require('ramda')
+const db = require('../db')
 
-// index, show, store, update, destroy
+let cartoes = [{
+  id_cartao: 213217,
+  id_comprador: 1234567,
+  bandeira: 'visa',
+  portador: 'Igor Antun',
+  digitos: '4111 1111 1111 1111',
+}]
+
 module.exports = {
-    index(req, res) {
-        //Constroi a query e retorna o res
-    },
-    show(req, res) {},
-    store(req, res) {},
-    update(req, res) {},
-    destroy(req, res) {}
+  show(req, res) {
+    const { digitos } = req.query
+    console.log(digitos, cartoes)
+    res.send(head(cartoes.filter(cartao => cartao.digitos == digitos)))
+  },
+
+  create(req, res) {
+    const {
+      id_comprador,
+      bandeira,
+      portador,
+      digitos
+    } = req.body
+
+    const id_cartao = Math.floor(Math.random() * 90000) + 10000
+
+    const cartao = {
+      id_cartao,
+      id_comprador,
+      bandeira,
+      portador,
+      digitos,
+    }
+
+    cartoes.push(cartao)
+    res.send(201, cartao)
+  },
+
+  delete(req, res) {
+    const { digitos } = req.query
+    cartoes = cartoes.filter(cartao => cartao.digitos != digitos)
+    res.sendStatus(200)
+  }
 };
