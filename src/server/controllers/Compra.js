@@ -17,6 +17,11 @@ module.exports = {
       metodo,
     } = req.body
 
+    const data = new Date().now();
+
+    const text = 'INSERT INTO bd.compra (fk_id_comprador, fk_id_loja, data, valor) VALUES ($1, $2, $3, $4);'
+    const values = [id_comprador, id_loja, data, valor];
+
     const id_compra = Math.floor(Math.random() * 90000) + 10000
     const id_transacao = Math.floor(Math.random() * 90000) + 10000
     const id_boleto = Math.floor(Math.random() * 90000) + 10000
@@ -26,9 +31,10 @@ module.exports = {
     if (metodo === 'boleto') {
       // CRIAR BOLETO NO BANCO DE DADOS COM OS DADOS RECEBIDOS
       // CRIAR TRANSAÇÃO COM MÉTODO BOLETO E DADOS RECEBIDOS
+      const boletoText = 
+        'INSERT INTO bd.boleto (id_transacao, id_compra, codigo_barra, valor, vencimento, pagador, receberdor) VALUES ($1, $2, $3, $4, $5, $6, $7)';
 
       const boleto = {
-        id_boleto,
         id_transacao,
         id_compra,
         codigo_barra: '34191.79001 01043.510047 91020.150008 2 80870026000',
