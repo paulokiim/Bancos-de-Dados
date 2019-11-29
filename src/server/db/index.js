@@ -1,8 +1,8 @@
 const { Client } = require("pg")
 
-const configs = require("../config/database")
+const { production, local } = require("../config/database")
 
-const client = new Client(configs)
+const client = new Client(local)
 
 client.connect()
 
