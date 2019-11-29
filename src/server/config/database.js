@@ -1,7 +1,7 @@
 module.exports = {
-  user: "postgres",
+  user: "isilo.db.elephantsql.com",
   host: "localhost",
-  database: "postgres",
-  password: "123456",
-  port: 1234
+  database: "rxuuynkc",
+  password: "6P7lt1O6hFjv-AUF4e0-Cv6a-nRMX1kB",
+  port: 5432
 };
