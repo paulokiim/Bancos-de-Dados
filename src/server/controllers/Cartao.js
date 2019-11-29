@@ -1,16 +1,6 @@
 const { head } = require("ramda")
 const db = require("../db")
 
-let cartoes = [
-  {
-    id_cartao: 213217,
-    id_comprador: 1234567,
-    bandeira: "visa",
-    portador: "Igor Antun",
-    digitos: "4111 1111 1111 1111"
-  }
-]
-
 module.exports = {
   show(req, res) {
     const { digitos } = req.query
@@ -21,18 +11,17 @@ module.exports = {
   create(req, res) {
     const { id_comprador, bandeira, portador, digitos } = req.body
 
-    const id_cartao = Math.floor(Math.random() * 90000) + 10000
+    const text = 'INSERT INTO bd.cartao (fk_id_comprador, bandeira, portador, digitos) VALUES ($1, $2, $3, $4) RETURNING *;'
+    const values = [id_comprador, bandeira, portador, digitos];
 
-    const cartao = {
-      id_cartao,
-      id_comprador,
-      bandeira,
-      portador,
-      digitos
-    }
-
-    cartoes.push(cartao)
-    res.send(201, cartao)
+    const dataFromDb = db.query(text, values, (err,result) => {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        console.log(result.rows[0]);
+        res.send(201, result.rows[0]);
+      }
+    });
   },
 
   delete(req, res) {
