@@ -28,9 +28,12 @@ module.exports = {
       data_nascimento
     }
 
+    const arraySplit = data_nascimento.split("/")
+    const dataNascimentoTratada = `${arraySplit[2]}-${arraySplit[1]}-${arraySplit[0]}`
+
     const text =
-      "INSERT INTO bd.comprador (nome, cpf, data_nascimento) values ($2, $2, $3);"
-    const values = [nome, cpf, data_nascimento]
+      "INSERT INTO bd.comprador (nome, cpf, data_nascimento) values ($1, $2, $3);"
+    const values = [nome, cpf, dataNascimentoTratada]
 
     db.query(text, values, (err, res) => {
       if (err) {
