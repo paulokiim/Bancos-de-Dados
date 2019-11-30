@@ -1,17 +1,12 @@
-import axios from 'axios'
+import axios from "axios"
 
-const createPurchase = ({
-  buyerId,
-  shopId,
-  amount,
-  method,
-}) => {
+const createPurchase = ({ buyerId, shopId, amount, method }) => {
   axios
-    .post('/compras', {
+    .post("/compras", {
       id_comprador: buyerId,
       id_loja: shopId,
       valor: amount,
-      metodo: method,
+      metodo: method
     })
     .then(({ data }) => {
       if (data.nome) {
@@ -22,6 +17,10 @@ const createPurchase = ({
     .catch(console.error)
 }
 
-export {
-  createPurchase
+const getPurchase = ({ id_comprador }) => {
+  axios.get(`/compras?id_comprador${id_comprador}`).then(resposta => {
+    console.log(resposta)
+  })
 }
+
+export { createPurchase }
