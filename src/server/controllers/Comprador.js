@@ -25,11 +25,11 @@ module.exports = {
         console.log(result.rows[0])
         let resposta = result.rows[0]
 
-        //Se for
+        //Se houver resultado trata os dados
         if (result.rows[0]) {
           const { data_nascimento } = result.rows[0]
 
-          // TTrata string de datas
+          // Trata string de datas
           let mesNascimento = data_nascimento.getMonth() + 1
           if (mesNascimento < 10) {
             mesNascimento = `0${mesNascimento}`
