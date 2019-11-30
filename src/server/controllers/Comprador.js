@@ -23,17 +23,29 @@ module.exports = {
         console.log(err.stack)
       } else {
         console.log(result.rows[0])
+        let resposta = result.rows[0]
 
-        const { data_nascimento } = result.rows[0]
+        //Se for
+        if (result.rows[0]) {
+          const { data_nascimento } = result.rows[0]
 
-        // const arrayData = data.split("-")
-        const dataTratada = `${data_nascimento.getDate()}/${data_nascimento.getMonth() +
-          1}/${data_nascimento.getFullYear()}`
-        console.log("data", dataTratada)
+          // TTrata string de datas
+          let mesNascimento = data_nascimento.getMonth() + 1
+          if (mesNascimento < 10) {
+            mesNascimento = `0${mesNascimento}`
+          }
 
-        // const resultado = { ...result.rows[0], data_nascimento: dataTratada }
-        // console.log("Data tratada", dataTratada, resultado)
-        res.send(result.rows[0])
+          let diaNascimento = data_nascimento.getDate()
+          if (diaNascimento < 10) {
+            diaNascimento = `0${diaNascimento}`
+          }
+
+          const dataTratada = `${diaNascimento}/${mesNascimento}/${data_nascimento.getFullYear()}`
+
+          resposta = { ...result.rows[0], data_nascimento: dataTratada }
+        }
+
+        res.send(resposta)
       }
     })
   },
