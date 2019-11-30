@@ -23,4 +23,4 @@ const getPurchase = ({ id_comprador }) => {
   })
 }
 
-export { createPurchase }
+export { createPurchase, getPurchase }
