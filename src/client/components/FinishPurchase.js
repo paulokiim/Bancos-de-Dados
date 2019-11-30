@@ -61,7 +61,7 @@ const FinishPurchase = ({
           onClick={() => {
             createPurchase({
               buyerId: customer.id_comprador,
-              shopId: 'asd',
+              shopId: 10,
               amount,
               method: paymentMethod,
             })

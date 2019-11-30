@@ -14,7 +14,7 @@ module.exports = {
     const text = 'INSERT INTO bd.cartao (fk_id_comprador, bandeira, portador, digitos) VALUES ($1, $2, $3, $4) RETURNING *;'
     const values = [id_comprador, bandeira, portador, digitos];
 
-    const dataFromDb = db.query(text, values, (err,result) => {
+    db.query(text, values, (err,result) => {
       if (err) {
         console.log(err.stack);
       } else {

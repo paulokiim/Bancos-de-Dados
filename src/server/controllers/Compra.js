@@ -9,7 +9,7 @@ module.exports = {
     res.send(head(compras.filter(compra => compras.id_compra == id)))
   },
 
-  create(req, res) {
+  async create(req, res) {
     const {
       id_comprador,
       id_loja,
@@ -17,50 +17,56 @@ module.exports = {
       metodo,
     } = req.body
 
-    const data = new Date().now();
+    const parsedValor = Math.floor(valor * 100);
+    const data = new Date().toISOString();
+    const data_futura = new Date(parseInt(data) + 1000000).toISOString();
 
-    const text = 'INSERT INTO bd.compra (fk_id_comprador, fk_id_loja, data, valor) VALUES ($1, $2, $3, $4);'
-    const values = [id_comprador, id_loja, data, valor];
+    const compraText = 'INSERT INTO bd.compra (fk_id_comprador, fk_id_loja, data, valor) VALUES ($1, $2, $3, $4) RETURNING *;'
+    const compraValues = [id_comprador, id_loja, data, parsedValor];
 
-    const id_compra = Math.floor(Math.random() * 90000) + 10000
-    const id_transacao = Math.floor(Math.random() * 90000) + 10000
-    const id_boleto = Math.floor(Math.random() * 90000) + 10000
-    const data = Date.now()
-    const data_futura = Date.now() + 1000000
+    const dataInserted = db.query(compraText, compraValues, (err,result) => {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        console.log(result.rows[0]);
+        const resultado =  result.rows[0];
+
+        const transacaoText = 'INSERT INTO bd.transacao (fk_id_compra, data, valor, metodo, status) VALUES ($1, $2, $3, $4, $5) RETURNING *;'
+        const transacaoValues = [resultado.id_compra, data, parsedValor, metodo, 1];
+
+        db.query(transacaoText, transacaoValues, (err,result) => {
+          if (err) {
+            console.log(err.stack);
+          } else {
+            console.log(result.rows[0]);
+            return {
+              transacao: result.rows[0],
+              compra: resultado,
+            };
+          }
+        }); 
+      }
+    });
 
     if (metodo === 'boleto') {
       // CRIAR BOLETO NO BANCO DE DADOS COM OS DADOS RECEBIDOS
       // CRIAR TRANSAÇÃO COM MÉTODO BOLETO E DADOS RECEBIDOS
+      const recebedor = 'Lojinha BD';
+      const { id_transacao } = dataInserted.transacao;
+      const { id_compra, id_comprador } = dataInserted.compra;
+      const codigo_barra = '34191.79001 01043.510047 91020.150008 2 80870026000';
       const boletoText = 
-        'INSERT INTO bd.boleto (id_transacao, id_compra, codigo_barra, valor, vencimento, pagador, receberdor) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+        'INSERT INTO bd.boleto (fk_id_transacao, fk_id_compra, codigo_barra, valor, vencimento, pagador, receberdor) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+      const boletoValues = [id_transacao, id_compra, codigo_barra, parsedValor, data_futura, id_comprador, recebedor];
 
-      const boleto = {
-        id_transacao,
-        id_compra,
-        codigo_barra: '34191.79001 01043.510047 91020.150008 2 80870026000',
-        valor,
-        vencimento: data_futura,
-        pagador: id_comprador,
-        recebedor: 'Lojinha BD',
-      }
-
-      console.log(boleto)
-    } else if (metodo === 'creditCard') {
-      // CRIAR TRANSAÇÃO COM MÉTODO CARTÃO DE CRÉDITO E DADOS RECEBIDOS
-      // NÃO ESTAMOS SALVANDO NADA DOS DADOS DO CARTÃO UTILIZADO?
-    } else {
-      res.send(400)
+      db.query(boletoText, boletoValues, (err,result) => {
+        if (err) {
+          console.log(err.stack);
+        } else {
+          console.log(result.rows[0]);
+          res.send(201, result.rows[0]);
+        }
+      }); 
     }
-
-    const compra = {
-      id_compra,
-      id_comprador,
-      id_loja,
-      data,
-      valor
-    }
-
-    compras.push(compra)
-    res.send(201, compra)
   },
 }
