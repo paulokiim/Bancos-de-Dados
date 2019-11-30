@@ -105,6 +105,7 @@ const CreditCard = ({
                 className={button}
                 onClick={() => {
                   deleteCreditCard(creditCard.digitos)
+                  setCreditCard({ portador: '', digitos: '' })
                   setCreditCardFound(false)
                 }}
                 disabled={deleteCreditCardDisabled}
