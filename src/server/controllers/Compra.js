@@ -47,7 +47,7 @@ module.exports = {
             if (metodo === "boleto") {
               const recebedor = "Lojinha BD";
               const { id_transacao } = transacao;
-              const { id_compra, id_comprador } = resultado;
+              const { id_compra, fk_id_comprador } = resultado;
               const codigo_barra =
                 "34191.79001 01043.510047 91020.150008 2 80870026000";
               const boletoText =
@@ -58,7 +58,7 @@ module.exports = {
                 codigo_barra,
                 parsedValor,
                 data_futura,
-                id_comprador,
+                fk_id_comprador,
                 recebedor
               ];
 

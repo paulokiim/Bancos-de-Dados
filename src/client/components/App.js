@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, Fragment } from 'react'
 import {
   Stack,
+  CompoundButton,
 } from 'office-ui-fabric-react'
-import { Card, Checkout } from '.'
+import { Card, Checkout, SearchPurchase } from '.'
 import { SearchBox } from 'office-ui-fabric-react/lib/SearchBox'
 import { Text } from 'office-ui-fabric-react/lib/Text'
 import { TestImages } from '@uifabric/example-data'
 
 import { mergeStyles } from 'office-ui-fabric-react/lib/Styling'
+import SearchPurchaseComponent from './SearchPurchase'
 
 const header = mergeStyles({
   width: '100%',
@@ -50,6 +52,9 @@ const App = () => {
       <div className={header}>
         <Text variant="xxLargePlus">Lojinha BD</Text>
         <SearchBox className={search} placeholder="Buscar produtos..." />
+        <Fragment>
+          <CompoundButton onClick={<Checkout setShowModal={setShowModal}/>}>Visualizar Compras</CompoundButton>
+        </Fragment>
       </div>
       <Stack horizontalAlign="space-around" horizontal wrap className={cards}>
         <Card id={0} openCheckout={openCheckout} />
