@@ -2,9 +2,11 @@ const db = require("../db");
 
 module.exports = {
   show(req, res) {
-    const text = 'select c.id_compra, c.valor, c.data, cartao.digitos, cartao.portador FROM bd.compra c left join bd.comprador cp on (cp.id_comprador = c.fk_id_comprador) left join bd.cartao cartao on (cartao.fk_id_comprador = cp.id_comprador);'
+    const { id_comprador } = req.query;
+    const text = 'select c.id_compra, c.valor, c.data, cartao.digitos, cartao.portador FROM bd.compra c left join bd.comprador cp on (cp.id_comprador = $1) left join bd.cartao cartao on (cartao.fk_id_comprador = $2);'
+    const params = [id_comprador, id_comprador]
 
-    db.query(text, undefined, (err, result) => {
+    db.query(text, params, (err, result) => {
       if (err) {
         console.log(err.stack)
       } else {
