@@ -12,5 +12,12 @@ module.exports = {
     database: "postgres",
     password: "pjskim",
     port: 5432
+  },
+  localale: {
+    user: "postgres",
+    host: "localhost",
+    database: "postgres",
+    password: "admin",
+    port: 5432
   }
 }
