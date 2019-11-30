@@ -14,7 +14,7 @@ CREATE TABLE Cartao
     fk_id_comprador INTEGER REFERENCES Comprador(id_comprador),
     bandeira VARCHAR(255),
     portador VARCHAR(255),
-    digitos INTEGER,
+    digitos VARCHAR(255),
     PRIMARY KEY (id_cartao)
 );
 
