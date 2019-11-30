@@ -30,7 +30,7 @@ const icon = mergeStyles({
   color: "lightseagreen"
 });
 
-const SearchPurchaseComponent = () => {
+const SearchPurchaseComponent = ({ showPurchaseModal, setShowPurchaseModal }) => {
   const [customerFound, setCustomerFound] = useState(true);
   const [customer, setCustomer] = useState({
     id_comprador: "",
@@ -43,9 +43,10 @@ const SearchPurchaseComponent = () => {
   return (
     <Fragment>
       <Modal
-        isOpen={true}
+        isOpen={showPurchaseModal}
         onDismiss={() => {
           setFinished(false);
+          setShowPurchaseModal(false)
         }}
         isBlocking={false}
         className={modal}
