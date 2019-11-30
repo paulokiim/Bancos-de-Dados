@@ -67,7 +67,7 @@ const SearchPurchaseComponent = ({ showPurchaseModal, setShowPurchaseModal }) =>
               <br />
 
               <br />
-              <Separator>Finalizar compra</Separator>
+              <Separator>Buscar</Separator>
 
             </Fragment>
           )}
