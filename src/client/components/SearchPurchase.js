@@ -12,10 +12,6 @@ import { FontIcon } from "office-ui-fabric-react/lib/Icon";
 import { Text } from "office-ui-fabric-react/lib/Text";
 
 import Customer from "./Customer";
-import PaymentMethod from "./PaymentMethod";
-import CreditCard from "./CreditCard";
-import FinishPurchase from "./FinishPurchase";
-
 const modal = mergeStyles({
   padding: 20
 });
@@ -34,7 +30,7 @@ const icon = mergeStyles({
   color: "lightseagreen"
 });
 
-const SearchPurchaseComponent = ({ setShowModal }) => {
+const SearchPurchaseComponent = () => {
   const [customerFound, setCustomerFound] = useState(true);
   const [customer, setCustomer] = useState({
     id_comprador: "",
@@ -50,7 +46,6 @@ const SearchPurchaseComponent = ({ setShowModal }) => {
         isOpen={true}
         onDismiss={() => {
           setFinished(false);
-          setShowModal(false);
         }}
         isBlocking={false}
         className={modal}

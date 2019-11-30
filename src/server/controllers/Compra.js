@@ -1,12 +1,22 @@
-const { head } = require("ramda");
 const db = require("../db");
-
-const compras = [];
 
 module.exports = {
   show(req, res) {
-    const { id } = req.query;
-    res.send(head(compras.filter(compra => compras.id_compra == id)));
+    const text = 'select c.id_compra, c.valor, c.data, cartao.digitos, cartao.portador FROM bd.compra c left join bd.comprador cp on (cp.id_comprador = c.fk_id_comprador) left join bd.cartao cartao on (cartao.fk_id_comprador = cp.id_comprador);'
+
+    db.query(text, undefined, (err, result) => {
+      if (err) {
+        console.log(err.stack)
+      } else {
+        console.log(result.rows[0])
+        res.send(result.rows.map((item) => {
+          return {
+            ...item,
+            valor: parseFloat(item.valor/100).toFixed(2),
+          }
+        }));
+      } 
+    });
   },
 
   create(req, res) {
