@@ -10,6 +10,7 @@ import {
 import { mergeStyles } from "office-ui-fabric-react/lib/Styling";
 import { FontIcon } from "office-ui-fabric-react/lib/Icon";
 import { Text } from "office-ui-fabric-react/lib/Text";
+import FinishSearch from './FinishSearch'
 
 import Customer from "./Customer";
 const modal = mergeStyles({
@@ -68,6 +69,12 @@ const SearchPurchaseComponent = ({ showPurchaseModal, setShowPurchaseModal }) =>
 
               <br />
               <Separator>Buscar</Separator>
+
+              <FinishSearch 
+                customer={customer}
+                customerFound={customerFound}
+                setFinished={setFinished}
+              />
 
             </Fragment>
           )}

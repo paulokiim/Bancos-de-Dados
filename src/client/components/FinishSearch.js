@@ -14,7 +14,7 @@ const button = mergeStyles({
 })
 
 
-const FinishPurchase = ({ setFinished, customer }) => {
+const FinishSearch = ({ setFinished, customer }) => {
 
   return (
     <Fragment>
@@ -27,7 +27,6 @@ const FinishPurchase = ({ setFinished, customer }) => {
             })
             setFinished(true)
           }}
-          disabled={paymentDisabled}
           className={button}
         >
           Finalizar busca
@@ -37,4 +36,4 @@ const FinishPurchase = ({ setFinished, customer }) => {
   )
 }
 
-export default FinishPurchase
+export default FinishSearch
