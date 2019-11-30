@@ -1,5 +1,6 @@
 const { head } = require("ramda")
 const db = require("../db")
+const { parseDataBancoPraFront } = require("../../utils/functions")
 
 const compradores = [
   {
@@ -13,7 +14,40 @@ const compradores = [
 module.exports = {
   show(req, res) {
     const { cpf } = req.query
-    res.send(head(compradores.filter(comprador => comprador.cpf == cpf)))
+
+    const text = "SELECT * FROM bd.comprador WHERE cpf = $1"
+    const values = [cpf]
+
+    db.query(text, values, (err, result) => {
+      if (err) {
+        console.log(err.stack)
+      } else {
+        console.log(result.rows[0])
+        let resposta = result.rows[0]
+
+        //Se for
+        if (result.rows[0]) {
+          const { data_nascimento } = result.rows[0]
+
+          // TTrata string de datas
+          let mesNascimento = data_nascimento.getMonth() + 1
+          if (mesNascimento < 10) {
+            mesNascimento = `0${mesNascimento}`
+          }
+
+          let diaNascimento = data_nascimento.getDate()
+          if (diaNascimento < 10) {
+            diaNascimento = `0${diaNascimento}`
+          }
+
+          const dataTratada = `${diaNascimento}/${mesNascimento}/${data_nascimento.getFullYear()}`
+
+          resposta = { ...result.rows[0], data_nascimento: dataTratada }
+        }
+
+        res.send(resposta)
+      }
+    })
   },
 
   create(req, res) {
@@ -32,18 +66,18 @@ module.exports = {
     const dataNascimentoTratada = `${arraySplit[2]}-${arraySplit[1]}-${arraySplit[0]}`
 
     const text =
-      "INSERT INTO bd.comprador (nome, cpf, data_nascimento) values ($1, $2, $3);"
+      "INSERT INTO bd.comprador (nome, cpf, data_nascimento) values ($1, $2, $3) RETURNING *;"
     const values = [nome, cpf, dataNascimentoTratada]
 
-    db.query(text, values, (err, res) => {
+    db.query(text, values, (err, result) => {
       if (err) {
         console.log(err.stack)
       } else {
-        console.log(res.rows[0])
+        console.log(result.rows[0])
+        res.send(201, comprador)
       }
     })
 
     // compradores.push(comprador)
-    res.send(201, comprador)
   }
 }

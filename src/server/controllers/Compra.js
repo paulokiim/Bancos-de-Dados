@@ -1,5 +1,5 @@
-const { head } = require('ramda')
-const db = require('../db')
+const { head } = require("ramda")
+const db = require("../db")
 
 const compras = []
 
@@ -48,7 +48,7 @@ module.exports = {
       }
     });
 
-    if (metodo === 'boleto') {
+    if (metodo === "boleto") {
       // CRIAR BOLETO NO BANCO DE DADOS COM OS DADOS RECEBIDOS
       // CRIAR TRANSAÇÃO COM MÉTODO BOLETO E DADOS RECEBIDOS
       const recebedor = 'Lojinha BD';
