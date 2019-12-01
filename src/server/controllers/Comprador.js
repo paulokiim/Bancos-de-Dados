@@ -2,15 +2,6 @@ const { head } = require("ramda")
 const db = require("../db")
 const { parseDataBancoPraFront } = require("../../utils/functions")
 
-const compradores = [
-  {
-    id_comprador: 21418,
-    nome: "Igor Antun",
-    cpf: "123.456.789-09",
-    data_nascimento: "22/12/1999"
-  }
-]
-
 module.exports = {
   show(req, res) {
     const { cpf } = req.query
@@ -53,15 +44,6 @@ module.exports = {
   create(req, res) {
     const { nome, cpf, data_nascimento } = req.body
 
-    const id_comprador = Math.floor(Math.random() * 90000) + 10000
-
-    const comprador = {
-      id_comprador,
-      nome,
-      cpf,
-      data_nascimento
-    }
-
     const arraySplit = data_nascimento.split("/")
     const dataNascimentoTratada = `${arraySplit[2]}-${arraySplit[1]}-${arraySplit[0]}`
 
@@ -74,10 +56,8 @@ module.exports = {
         console.log(err.stack)
       } else {
         console.log(result.rows[0])
-        res.send(201, comprador)
+        res.send(201, result.rows[0])
       }
     })
-
-    // compradores.push(comprador)
   }
 }

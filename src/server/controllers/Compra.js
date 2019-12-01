@@ -4,8 +4,8 @@ module.exports = {
   index(req, res) {
     const { id_comprador } = req.query
     const text =
-      "select c.id_compra, c.valor, c.data, cartao.digitos, cartao.portador FROM bd.compra c left join bd.comprador cp on (cp.id_comprador = $1) left join bd.cartao cartao on (cartao.fk_id_comprador = $2);"
-    const params = [id_comprador, id_comprador]
+      "select c.id_compra, c.valor, c.data, cartao.digitos, cartao.portador FROM bd.compra c left join bd.comprador cp on (cp.id_comprador = $1) left join bd.cartao cartao on (cartao.fk_id_comprador = $2) where c.fk_id_comprador = $3;"
+    const params = [id_comprador, id_comprador, id_comprador]
 
     db.query(text, params, (err, result) => {
       if (err) {
