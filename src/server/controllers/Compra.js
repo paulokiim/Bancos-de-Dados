@@ -11,15 +11,31 @@ module.exports = {
       if (err) {
         console.log(err.stack)
       } else {
-        console.log("Retorno index compra", result.rows)
-        res.send(
-          result.rows.map(item => {
-            return {
-              ...item,
-              valor: parseFloat(item.valor / 100).toFixed(2)
-            }
-          })
-        )
+        // console.log("Retorno index compra", result.rows)
+        const retornoTratado = result.rows.map(item => {
+          // Trata string de datas
+          const data_nascimento = item.data
+          let mesNascimento = data_nascimento.getMonth() + 1
+          if (mesNascimento < 10) {
+            mesNascimento = `0${mesNascimento}`
+          }
+
+          let diaNascimento = data_nascimento.getDate()
+          if (diaNascimento < 10) {
+            diaNascimento = `0${diaNascimento}`
+          }
+
+          const dataTratada = `${diaNascimento}/${mesNascimento}/${data_nascimento.getFullYear()}`
+
+          return {
+            ...item,
+            data: dataTratada,
+            digitos: item.digitos.substr(-4),
+            valor: parseFloat(item.valor / 100).toFixed(2)
+          }
+        })
+        console.log("retorno tratado", retornoTratado)
+        res.send(retornoTratado)
       }
     })
   },

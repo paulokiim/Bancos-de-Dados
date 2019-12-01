@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react"
+import React, { useState, Fragment, useEffect } from "react"
 import {
   DefaultButton,
   CompoundButton,
@@ -51,47 +51,14 @@ const SearchPurchaseComponent = ({
     data_nascimento: ""
   })
 
-  const [items, setItems] = useState([
-    {
-      key: 1,
-      id_compra: 1,
-      valor: 232,
-      data: "15/10/2009",
-      digitos: 3333,
-      portador: "Alexandree"
-    },
-    {
-      key: 2,
-      id_compra: 2,
-      valor: 232,
-      data: "15/10/2009",
-      digitos: 2222,
-      portador: "Jose"
-    },
-    {
-      key: 2,
-      id_compra: 3,
-      valor: 232,
-      data: "15/10/2009",
-      digitos: 2222,
-      portador: "Jose"
-    },
-    {
-      key: 2,
-      valor: 21432,
-      id_compra: 4,
-      data: "15/10/2009",
-      digitos: 2222,
-      portador: "Jseofino"
-    }
-  ])
+  const [items, setItems] = useState([])
 
   const columns = [
     {
       key: "column1",
       name: "Id da Compra",
       fieldName: "id_compra",
-      minWidth: 50,
+      minWidth: 100,
       maxWidth: 100,
       isResizable: true
     },
@@ -115,25 +82,19 @@ const SearchPurchaseComponent = ({
       key: "column4",
       name: "Últimos 4 digitos",
       fieldName: "digitos",
-      minWidth: 200,
-      maxWidth: 300,
+      minWidth: 150,
+      maxWidth: 150,
       isResizable: true
     },
     {
       key: "column5",
       name: "Nome Portador",
       fieldName: "portador",
-      minWidth: 100,
-      maxWidth: 200,
+      minWidth: 170,
+      maxWidth: 170,
       isResizable: true
     }
   ]
-
-  // const comprasJustificadas = retorno.map((compra, index) => ({
-  //   key: index,
-  //   id_compra: compra.id_compra
-  //   // Montar aqui o objeto para inserir na tabela, com o formato
-  // }))
 
   const [finished, setFinished] = useState(false)
 
@@ -170,6 +131,7 @@ const SearchPurchaseComponent = ({
                 customer={customer}
                 customerFound={customerFound}
                 setFinished={setFinished}
+                setItems={setItems}
               />
             </Fragment>
           )}
@@ -179,6 +141,7 @@ const SearchPurchaseComponent = ({
               <DetailsList
                 items={items}
                 columns={columns}
+
                 // setKey="set"
                 // layoutMode={DetailsListLayoutMode.justified}
                 // selectionPreservedOnEmptyClick={true}
