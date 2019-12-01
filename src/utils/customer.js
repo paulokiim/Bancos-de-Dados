@@ -1,17 +1,17 @@
-import axios from 'axios'
+import axios from "axios"
 
 const cpfRegex = /^\d{3}\.\d{3}\.\d{3}\-\d{2}$/
 
-const createCustomer = ({
-  name,
-  cpf,
-  birthday
-}, setCustomerFound, setCustomer) => {
+const createCustomer = (
+  { name, cpf, birthday },
+  setCustomerFound,
+  setCustomer
+) => {
   axios
-    .post('/compradores', {
+    .post("/compradores", {
       nome: name,
       cpf,
-      data_nascimento: birthday,
+      data_nascimento: birthday
     })
     .then(({ data }) => {
       if (data.nome) {
@@ -40,7 +40,4 @@ const getCustomer = (cpf, setCustomerFound, setCustomer) => {
   }
 }
 
-export {
-  createCustomer,
-  getCustomer,
-}
+export { createCustomer, getCustomer }

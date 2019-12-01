@@ -56,7 +56,27 @@ module.exports = {
         console.log(err.stack)
       } else {
         console.log(result.rows[0])
-        res.send(201, result.rows[0])
+        let resposta = result.rows[0]
+        //Se houver resultado trata os dados
+        if (result.rows[0]) {
+          const { data_nascimento } = result.rows[0]
+
+          // Trata string de datas
+          let mesNascimento = data_nascimento.getMonth() + 1
+          if (mesNascimento < 10) {
+            mesNascimento = `0${mesNascimento}`
+          }
+
+          let diaNascimento = data_nascimento.getDate()
+          if (diaNascimento < 10) {
+            diaNascimento = `0${diaNascimento}`
+          }
+
+          const dataTratada = `${diaNascimento}/${mesNascimento}/${data_nascimento.getFullYear()}`
+
+          resposta = { ...result.rows[0], data_nascimento: dataTratada }
+        }
+        res.send(201, resposta)
       }
     })
   }
