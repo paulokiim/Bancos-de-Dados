@@ -11,7 +11,7 @@ module.exports = {
       if (err) {
         console.log(err.stack)
       } else {
-        console.log(result.rows[0])
+        console.log("Retorno index compra", result.rows)
         res.send(
           result.rows.map(item => {
             return {
@@ -39,7 +39,7 @@ module.exports = {
       if (err) {
         console.log(err.stack)
       } else {
-        console.log(result.rows[0])
+        console.log("Retorno compra", result.rows[0])
         const resultado = result.rows[0]
 
         const transacaoText =
@@ -56,7 +56,7 @@ module.exports = {
           if (err) {
             console.log(err.stack)
           } else {
-            console.log(result.rows[0])
+            console.log("Retorno transacao", result.rows[0])
             const transacao = result.rows[0]
 
             if (metodo === "boleto") {
@@ -81,7 +81,7 @@ module.exports = {
                 if (err) {
                   console.log(err.stack)
                 } else {
-                  console.log(result.rows[0])
+                  console.log("Retorno boleto", result.rows[0])
                   res.send(201, result.rows[0])
                 }
               })

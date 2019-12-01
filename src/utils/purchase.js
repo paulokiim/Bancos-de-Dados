@@ -18,9 +18,12 @@ const createPurchase = ({ buyerId, shopId, amount, method }) => {
 }
 
 const getPurchase = ({ id_comprador }) => {
-  axios.get(`/compras?id_comprador${id_comprador}`).then(resposta => {
-    console.log(resposta)
-  })
+  axios
+    .get(`/compras?id_comprador${id_comprador}`)
+    .then(resposta => {
+      console.log("resposta compras", resposta)
+    })
+    .catch(console.error)
 }
 
 export { createPurchase, getPurchase }
